@@ -12,7 +12,8 @@ body {
 }
 
 main {
-  background-color: #dfcef1;
+  background-image: url('./image/sailor.jpg');
+  background-size: contain;
 }
 
 section {
@@ -32,12 +33,12 @@ table {
 
 td {
   border-radius: 0.5rem;
-  background-color: rgb(216, 95, 176);
+  background-color: rgb(218, 129, 191);
   padding: 1.2rem;
-  border-right: solid rgb(179, 74, 156) 0.25rem;
-  border-bottom: solid rgb(179, 74, 156) 0.25rem;
-  border-top: solid rgb(218, 129, 191) 0.25rem;
-  border-left: solid rgb(218, 129, 191) 0.25rem;
+  border-right: solid #b349ba 0.25rem;
+  border-bottom: solid #b349ba 0.25rem;
+  border-top: solid #723c7d 0.25rem;
+  border-left: solid #723c7d 0.25rem;
 }
 
 .reset {

@@ -50,12 +50,16 @@ class App extends Component {
         <section className="gameBody">
           <table>
             <tbody>
-              {this.state.game.map(row => {
+              {this.state.game.map((row, x) => {
                 return (
-                  <tr>
-                    {row.map(col => {
-                      // Put an onClick{} event on td for functionality.
-                      return <td onClick={this.testFn}>{col}</td>
+                  <tr key={x}>
+                    {row.map((col, y) => {
+                      return (
+                        <td key={y} onClick={() => this.checkTile(x, y)}>
+                          {col}
+                          {x},{y}
+                        </td>
+                      )
                     })}
                   </tr>
                 )
