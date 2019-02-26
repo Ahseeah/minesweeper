@@ -3,12 +3,27 @@ import axios from 'axios'
 
 class App extends Component {
   state = {
+    id: 0,
     game: [[]]
   }
 
   componentDidMount() {
     axios
-      .get('https://minesweeper-api.herokuapp.com/games', { difficulty: 0 })
+      .post('https://minesweeper-api.herokuapp.com/games', { difficulty: 0 })
+      .then(resp => {
+        this.setState({
+          id: resp.data.id,
+          game: resp.data.board
+        })
+      })
+  }
+
+  testFn() {
+    axios
+      .post('https://minesweeper-api.herokuapp.com/games', {
+        row: 0,
+        column: 0
+      })
       .then(resp => {
         this.setState({
           game: resp.data.board
@@ -20,7 +35,7 @@ class App extends Component {
     return (
       <main>
         <section>
-          <h1>⭐️Sailor 🎀 Moonswiper🌙</h1>
+          <h1>⭐️Sailor 🎀 Moonsweeper🌙</h1>
           <img
             src="http://www.picgifs.com/glitter-gifs/s/sailor-moon/picgifs-sailor-moon-79062.gif"
             id="brooch"
@@ -40,7 +55,7 @@ class App extends Component {
                   <tr>
                     {row.map(col => {
                       // Put an onClick{} event on td for functionality.
-                      return <td>{col}</td>
+                      return <td onClick={this.testFn}>{col}</td>
                     })}
                   </tr>
                 )
