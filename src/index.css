@@ -1,5 +1,6 @@
 :root {
-  font: 16px / 1 sans-serif;
+  font: 16px / 1, sans-serif;
+  font-family: 'Crushed', cursive;
 }
 
 html {
@@ -24,7 +25,7 @@ section {
 
 h1 {
   text-align: center;
-  color: rgb(216, 88, 184);
+  color: #723c7d;
 }
 
 table {
@@ -33,7 +34,7 @@ table {
 
 td {
   border-radius: 0.5rem;
-  background-color: rgb(218, 129, 191);
+  background-color: rgb(245, 143, 214);
   padding: 1.2rem;
   border-right: solid #b349ba 0.25rem;
   border-bottom: solid #b349ba 0.25rem;
@@ -50,5 +51,4 @@ td {
   float: left;
   height: 80px;
   padding-top: 15px;
-  display: ;
 }

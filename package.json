@@ -26,6 +26,7 @@
     "json": "^9.0.6",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-fontawesome": "^1.6.1",
     "react-scripts": "^2.1.5"
   }
 }
