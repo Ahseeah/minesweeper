@@ -8,13 +8,13 @@ class App extends Component {
   state = {
     difficulty: 0,
     id: 0,
-    game: [[]]
+    game: [[]],
+    gameMines: 0
   }
   // updateGame = event => {
   // this.setState{(
   // newGameText: event.target.value
-  // )}
-  //}
+
   componentDidMount() {
     axios
       .post('https://minesweeper-api.herokuapp.com/games', { difficulty: 0 })
@@ -38,27 +38,37 @@ class App extends Component {
         }
       )
       .then(resp => {
-        console.log({ resp })
-        this.setState({
-          game: resp.data.board
-        })
+        //const x = 9
+        this.setState(
+          {
+            game: resp.data.board,
+            gameState: resp.data.state,
+            gameMines: resp.data.mines
+          },
+          () => {
+            if (this.state.gameState === 'won') {
+              this.setState({ announcement: 'You Won ✨' })
+            } else if (this.state.gameState === 'lost') {
+              this.setState({ announcement: 'You Lost ❌' })
+            }
+          }
+        )
       })
   }
 
-  setPin = (x, y) => {
+  setFlag = (event, x, y) => {
+    event.preventDefault()
     axios
       .post(
         `https://minesweeper-api.herokuapp.com/games/${this.state.id}/flag`,
-        {
-          row: x,
-          col: y,
-          id: this.state.id
-        }
+        { id: this.state.gameID, row: x, col: y }
       )
       .then(resp => {
         console.log({ resp })
         this.setState({
-          game: resp.data.board
+          game: resp.data.board,
+          gameState: resp.data.state,
+          gameMines: resp.data.mines
         })
       })
   }
@@ -93,6 +103,9 @@ class App extends Component {
       <main>
         <section>
           <h1>⭐️Sailor Moonsweeper🌙</h1>
+          <section className="results">
+            <h2>{this.state.results}</h2>
+          </section>
           <img
             src="http://www.picgifs.com/glitter-gifs/s/sailor-moon/picgifs-sailor-moon-79062.gif"
             id="brooch"
@@ -115,14 +128,20 @@ class App extends Component {
                   <tr key={x}>
                     {row.map((col, y) => {
                       return (
-                        <td
+                        <Cell
+                          character={col}
                           key={y}
-                          onClick={() => this.testFn(x, y)}
-                          onContextMenu={() => this.setPin(x, y)}
+                          rowIndex={x}
+                          rowValue={row}
+                          colIndex={y}
+                          colValue={col}
+                          check={this.testFn}
+                          flag={this.setFlag}
+                          //key={y}
+                          //onClick={() => this.testFn(x, y)}
+                          //onContextMenu={() => this.setPin(x, y)}
                           //onChange={this.updatesStateWithNewGame}
-                        >
-                          <Cell character={col} />
-                        </td>
+                        />
                       )
                     })}
                   </tr>
