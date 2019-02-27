@@ -21,7 +21,7 @@ class Cell extends Component {
       case ' ':
         break
       default:
-        cellType = 'revealed-cell'
+        cellType = 'hidden-cell'
     }
 
     if (this.props.colValue !== 'F') {

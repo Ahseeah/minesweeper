@@ -9,19 +9,20 @@ class App extends Component {
     difficulty: 0,
     id: 0,
     game: [[]],
-    gameMines: 0
+    gameMines: 0,
+    gameStatus: ''
   }
-  // updateGame = event => {
-  // this.setState{(
-  // newGameText: event.target.value
 
   componentDidMount() {
     axios
-      .post('https://minesweeper-api.herokuapp.com/games', { difficulty: 0 })
+      .post('https://minesweeper-api.herokuapp.com/games', {
+        difficulty: this.state.difficulty
+      })
       .then(resp => {
         this.setState({
           id: resp.data.id,
-          game: resp.data.board
+          game: resp.data.board,
+          gameStatus: resp.data.state
         })
       })
   }
@@ -38,12 +39,11 @@ class App extends Component {
         }
       )
       .then(resp => {
-        //const x = 9
         this.setState(
           {
             game: resp.data.board,
-            gameState: resp.data.state,
-            gameMines: resp.data.mines
+            gameStatus: resp.data.state
+            //gameMines: resp.data.mines
           },
           () => {
             if (this.state.gameState === 'won') {
@@ -73,27 +73,23 @@ class App extends Component {
       })
   }
 
-  //changeDifficulty() {
-  // if (event.target.value === 'beginner')
-  //this.setState({
-  //difficulty: 0
-  //})
-  //} else if (event.target.value === 'intermediate')
-  //this.setState({
-  //difficulty: 1
-  //})
-  //} else if(event.target.value === 'expert')
-  //this.setState({
-  //difficulty: 2
-  //})
+  changeDifficulty = event => {
+    console.log(event.target.value)
+    this.setState({
+      difficulty: event.target.value
+    })
+  }
 
   resetGame() {
     axios
-      .post('https://minesweeper-api.herokuapp.com/games', { difficulty: 0 })
+      .post('https://minesweeper-api.herokuapp.com/games', {
+        difficulty: this.state.difficulty
+      })
       .then(resp => {
         this.setState({
           id: resp.data.id,
-          game: resp.data.board
+          game: resp.data.board,
+          gameStatus: resp.data.state
         })
       })
   }
@@ -104,21 +100,25 @@ class App extends Component {
         <section>
           <h1>⭐️Sailor Moonsweeper🌙</h1>
           <section className="results">
-            <h2>{this.state.results}</h2>
+            <h2>{this.state.gameStatus}</h2>
           </section>
           <img
             src="http://www.picgifs.com/glitter-gifs/s/sailor-moon/picgifs-sailor-moon-79062.gif"
             id="brooch"
           />
+          <button className="difficulty" onClick={() => this.testFn()} />
+          Change Difficulty
           <select
             onChange={this.changeDifficulty}
             value={this.state.difficulty}
           >
-            <option>Beginner</option>
-            <option>Intermediate</option>
-            <option>Expert</option>
+            <option value="0">Beginner</option>
+            <option value="1">Intermediate</option>
+            <option value="2">Expert</option>
           </select>
-          <button className="reset">Reset</button>
+          <button className="reset" onClick={() => this.resetGame()}>
+            Reset
+          </button>
         </section>
         <section className="gameBody">
           <table>
