@@ -23,7 +23,8 @@ section {
   align-items: center;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
   color: #723c7d;
 }

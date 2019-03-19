@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Cell from './components/Cell'
 
-//const API_URL = `https......`
-
 class App extends Component {
   state = {
     difficulty: 0,
@@ -14,6 +12,20 @@ class App extends Component {
   }
 
   componentDidMount() {
+    axios
+      .post('https://minesweeper-api.herokuapp.com/games', {
+        difficulty: this.state.difficulty
+      })
+      .then(resp => {
+        this.setState({
+          id: resp.data.id,
+          game: resp.data.board,
+          gameStatus: resp.data.state
+        })
+      })
+  }
+
+  setGameOption = () => {
     axios
       .post('https://minesweeper-api.herokuapp.com/games', {
         difficulty: this.state.difficulty
@@ -106,8 +118,10 @@ class App extends Component {
             src="http://www.picgifs.com/glitter-gifs/s/sailor-moon/picgifs-sailor-moon-79062.gif"
             id="brooch"
           />
-          <button className="difficulty" onClick={() => this.testFn()} />
-          Change Difficulty
+          <button className="difficulty" onClick={() => this.setGameOption()}>
+            Change Difficulty
+          </button>
+
           <select
             onChange={this.changeDifficulty}
             value={this.state.difficulty}
